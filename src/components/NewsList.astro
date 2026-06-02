@@ -1,0 +1,31 @@
+---
+interface NewsItem {
+  date: string;
+  title: string;
+  description: string;
+  category: string;
+}
+
+interface Props {
+  items: NewsItem[];
+}
+
+const { items } = Astro.props;
+---
+
+<div class="space-y-4">
+  {
+    items.map((item) => (
+      <article class="grid gap-3 border-b border-line pb-4 sm:grid-cols-[7rem_1fr]">
+        <div>
+          <p class="text-sm font-semibold text-accent">{item.date}</p>
+          <p class="mt-1 text-xs font-semibold uppercase tracking-widest text-muted">{item.category}</p>
+        </div>
+        <div>
+          <h3 class="font-semibold text-ink">{item.title}</h3>
+          <p class="mt-2 leading-7 text-muted">{item.description}</p>
+        </div>
+      </article>
+    ))
+  }
+</div>

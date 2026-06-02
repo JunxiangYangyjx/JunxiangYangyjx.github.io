@@ -1,0 +1,65 @@
+---
+import { profile } from '../data/profile';
+import { withBase, withoutBase } from '../utils/links';
+
+interface Props {
+  currentPath?: string;
+}
+
+const currentPath = withoutBase(Astro.props.currentPath ?? '/');
+const isActive = (path: string) => currentPath === path || (path !== '/' && currentPath.startsWith(path));
+
+const researchItems = [
+  { label: 'Overview', href: '/research/' },
+  { label: 'Projects', href: '/research/projects/' },
+  { label: 'Publications', href: '/research/publications/' },
+  { label: 'CV', href: '/research/cv/' }
+];
+
+const lifeItems = [
+  { label: '音乐', href: '/life/music/' },
+  { label: '照片墙', href: '/life/gallery/' },
+  { label: '游戏', href: '/life/games/' },
+  { label: '软件', href: '/life/software/' },
+  { label: '动漫', href: '/life/anime/' }
+];
+---
+
+<header class="sticky top-0 z-40 border-b border-line bg-white/95 backdrop-blur">
+  <div class="site-container flex min-h-16 items-center justify-between gap-4">
+    <a class="text-base font-semibold text-ink" href={withBase('/')}>{profile.name}</a>
+
+    <nav class="hidden items-center gap-1 md:flex" aria-label="Primary navigation">
+      <a class:list={['rounded-md px-3 py-2 text-sm font-semibold hover:text-accent', isActive('/') && 'text-accent']} href={withBase('/')}>Home</a>
+
+      <div class="group relative">
+        <a class:list={['rounded-md px-3 py-2 text-sm font-semibold hover:text-accent', isActive('/research/') && 'text-accent']} href={withBase('/research/')}>Study & Research</a>
+        <div class="invisible absolute left-0 top-full w-52 pt-3 opacity-0 transition group-focus-within:visible group-focus-within:opacity-100 group-hover:visible group-hover:opacity-100">
+          <div class="rounded-lg border border-line bg-white p-2 shadow-lg">
+            {researchItems.map((item) => <a class="block rounded-md px-3 py-2 text-sm text-muted hover:bg-soft hover:text-accent" href={withBase(item.href)}>{item.label}</a>)}
+          </div>
+        </div>
+      </div>
+
+      <div class="group relative">
+        <a class:list={['rounded-md px-3 py-2 text-sm font-semibold hover:text-accent', isActive('/life/') && 'text-accent']} href={withBase('/life/')}>My Life</a>
+        <div class="invisible absolute left-0 top-full w-44 pt-3 opacity-0 transition group-focus-within:visible group-focus-within:opacity-100 group-hover:visible group-hover:opacity-100">
+          <div class="rounded-lg border border-line bg-white p-2 shadow-lg">
+            {lifeItems.map((item) => <a class="block rounded-md px-3 py-2 text-sm text-muted hover:bg-soft hover:text-accent" href={withBase(item.href)}>{item.label}</a>)}
+          </div>
+        </div>
+      </div>
+    </nav>
+
+    <details class="relative md:hidden">
+      <summary class="list-none rounded-md border border-line px-3 py-2 text-sm font-semibold text-ink">Menu</summary>
+      <nav class="absolute right-0 top-12 w-72 rounded-lg border border-line bg-white p-4 shadow-lg" aria-label="Mobile navigation">
+        <a class="block rounded-md px-3 py-2 font-semibold text-ink hover:bg-soft" href={withBase('/')}>Home</a>
+        <p class="mt-3 px-3 text-xs font-semibold uppercase tracking-widest text-muted">Study & Research</p>
+        {researchItems.map((item) => <a class="block rounded-md px-3 py-2 text-sm text-muted hover:bg-soft hover:text-accent" href={withBase(item.href)}>{item.label}</a>)}
+        <p class="mt-3 px-3 text-xs font-semibold uppercase tracking-widest text-muted">My Life</p>
+        {lifeItems.map((item) => <a class="block rounded-md px-3 py-2 text-sm text-muted hover:bg-soft hover:text-accent" href={withBase(item.href)}>{item.label}</a>)}
+      </nav>
+    </details>
+  </div>
+</header>

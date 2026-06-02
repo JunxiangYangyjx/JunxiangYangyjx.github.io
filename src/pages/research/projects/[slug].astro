@@ -1,0 +1,106 @@
+---
+import BaseLayout from '../../../layouts/BaseLayout.astro';
+import LanguageToggle from '../../../components/LanguageToggle.astro';
+import { projects } from '../../../data/research';
+import { withBase } from '../../../utils/links';
+
+export function getStaticPaths() {
+  return projects
+    .filter((project) => project.hasDetail)
+    .map((project) => ({
+      params: { slug: project.slug },
+      props: { project }
+    }));
+}
+
+const { project } = Astro.props;
+---
+
+<BaseLayout title={project.titleZh} description={project.summaryZh}>
+  <section class="site-section border-b border-line">
+    <div class="site-container">
+      <div class="flex flex-col gap-5 sm:flex-row sm:items-start sm:justify-between">
+        <div>
+          <a class="text-sm font-semibold text-accent" href={withBase('/research/projects/')}>返回项目列表</a>
+          <div data-lang-panel="research" data-lang="cn" class="mt-5">
+            <p class="eyebrow">{project.categoryZh}</p>
+            <h1 class="mt-4 max-w-3xl text-4xl font-semibold text-ink">{project.titleZh}</h1>
+            <p class="mt-5 max-w-3xl text-lg leading-8 text-muted">{project.summaryZh}</p>
+          </div>
+          <div data-lang-panel="research" data-lang="en" hidden class="mt-5">
+            <p class="eyebrow">{project.categoryEn}</p>
+            <h1 class="mt-4 max-w-3xl text-4xl font-semibold text-ink">{project.titleEn}</h1>
+            <p class="mt-5 max-w-3xl text-lg leading-8 text-muted">{project.summaryEn}</p>
+          </div>
+        </div>
+        <LanguageToggle scope="research" />
+      </div>
+    </div>
+  </section>
+
+  <section class="site-section">
+    <div class="site-container grid gap-8 lg:grid-cols-[0.7fr_1.3fr]">
+      <aside class="space-y-4">
+        <div class="rounded-lg border border-line p-4">
+          <p class="text-sm font-semibold text-accent">Year</p>
+          <p class="mt-2 text-ink">{project.year}</p>
+        </div>
+        <div class="rounded-lg border border-line p-4">
+          <p class="text-sm font-semibold text-accent">Status</p>
+          <p class="mt-2 text-ink">{project.status}</p>
+        </div>
+        <div class="rounded-lg border border-line p-4">
+          <p class="text-sm font-semibold text-accent">Keywords</p>
+          <div class="mt-3 flex flex-wrap gap-2">
+            {project.keywords.map((keyword) => <span class="rounded-md bg-soft px-2.5 py-1 text-xs font-medium text-muted">{keyword}</span>)}
+          </div>
+        </div>
+      </aside>
+
+      <div class="space-y-10">
+        <section>
+          <h2 class="text-2xl font-semibold text-ink">Challenge</h2>
+          <p data-lang-panel="research" data-lang="cn" class="mt-4 leading-8 text-muted">{project.detail?.challengeZh}</p>
+          <p data-lang-panel="research" data-lang="en" hidden class="mt-4 leading-8 text-muted">{project.detail?.challengeEn}</p>
+        </section>
+
+        <section>
+          <h2 class="text-2xl font-semibold text-ink">Approach</h2>
+          <p data-lang-panel="research" data-lang="cn" class="mt-4 leading-8 text-muted">{project.detail?.approachZh}</p>
+          <p data-lang-panel="research" data-lang="en" hidden class="mt-4 leading-8 text-muted">{project.detail?.approachEn}</p>
+        </section>
+
+        {
+          project.images && project.images.length > 0 && (
+            <section>
+              <h2 class="text-2xl font-semibold text-ink">Figures</h2>
+              <div class="mt-5 grid gap-5 md:grid-cols-2">
+                {project.images.map((image) => (
+                  <figure class="rounded-lg border border-line bg-white p-3 shadow-sm">
+                    <img class="aspect-[16/10] w-full rounded-md bg-soft object-contain" src={withBase(image.src)} alt={image.alt} loading="lazy" />
+                    <figcaption data-lang-panel="research" data-lang="cn" class="mt-3 text-sm leading-6 text-muted">
+                      {image.captionZh}
+                    </figcaption>
+                    <figcaption data-lang-panel="research" data-lang="en" hidden class="mt-3 text-sm leading-6 text-muted">
+                      {image.captionEn}
+                    </figcaption>
+                  </figure>
+                ))}
+              </div>
+            </section>
+          )
+        }
+
+        <section>
+          <h2 class="text-2xl font-semibold text-ink">Outcomes</h2>
+          <ul data-lang-panel="research" data-lang="cn" class="mt-4 space-y-3">
+            {project.detail?.outcomesZh.map((item) => <li class="rounded-lg border border-line p-4 text-muted">{item}</li>)}
+          </ul>
+          <ul data-lang-panel="research" data-lang="en" hidden class="mt-4 space-y-3">
+            {project.detail?.outcomesEn.map((item) => <li class="rounded-lg border border-line p-4 text-muted">{item}</li>)}
+          </ul>
+        </section>
+      </div>
+    </div>
+  </section>
+</BaseLayout>

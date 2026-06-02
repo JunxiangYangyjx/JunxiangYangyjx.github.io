@@ -1,0 +1,128 @@
+---
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import LanguageToggle from '../../components/LanguageToggle.astro';
+import SectionHeader from '../../components/SectionHeader.astro';
+import ProjectCard from '../../components/ProjectCard.astro';
+import PublicationList from '../../components/PublicationList.astro';
+import { awards, education, labInfo, profile } from '../../data/profile';
+import { publications, projects, researchOverview } from '../../data/research';
+import { withBase } from '../../utils/links';
+---
+
+<BaseLayout title="Study & Research" description="研究方向、项目经历、论文会议、专利奖项和 CV。">
+  <section class="site-section border-b border-line">
+    <div class="site-container">
+      <div class="flex flex-col gap-5 sm:flex-row sm:items-start sm:justify-between">
+        <div>
+          <p class="eyebrow">Study & Research</p>
+          <h1 class="mt-4 text-4xl font-semibold text-ink">{researchOverview.titleZh}</h1>
+        </div>
+        <LanguageToggle scope="research" />
+      </div>
+
+      <div data-lang-panel="research" data-lang="cn" class="mt-8 max-w-3xl">
+        <p class="text-lg leading-8 text-muted">{researchOverview.summaryZh}</p>
+        <p class="mt-5 leading-8 text-muted">{profile.researchSummaryZh}</p>
+      </div>
+      <div data-lang-panel="research" data-lang="en" hidden class="mt-8 max-w-3xl">
+        <p class="text-lg leading-8 text-muted">{researchOverview.summaryEn}</p>
+        <p class="mt-5 leading-8 text-muted">{profile.researchSummaryEn}</p>
+      </div>
+    </div>
+  </section>
+
+  <section class="site-section">
+    <div class="site-container grid gap-8 lg:grid-cols-[0.8fr_1.2fr]">
+      <SectionHeader eyebrow="Overview" title="研究组织方式" description="首版聚焦研究主线、代表项目和正式成果，避免信息过散。" />
+      <div class="grid gap-4">
+        <ul data-lang-panel="research" data-lang="cn" class="space-y-3">
+          {researchOverview.focusZh.map((item) => <li class="rounded-lg border border-line p-4 text-muted">{item}</li>)}
+        </ul>
+        <ul data-lang-panel="research" data-lang="en" hidden class="space-y-3">
+          {researchOverview.focusEn.map((item) => <li class="rounded-lg border border-line p-4 text-muted">{item}</li>)}
+        </ul>
+        <article class="rounded-lg border border-line p-4">
+          <p class="text-sm font-semibold text-accent">{labInfo.name}</p>
+          <p data-lang-panel="research" data-lang="cn" class="mt-3 leading-7 text-muted">{labInfo.summaryZh}</p>
+          <p data-lang-panel="research" data-lang="en" hidden class="mt-3 leading-7 text-muted">{labInfo.summaryEn}</p>
+          <div class="mt-3 flex flex-wrap gap-3 text-sm text-accent">
+            {labInfo.links.map((link) => <a class="font-semibold hover:text-accent-strong" href={link.href}>{link.label}</a>)}
+          </div>
+        </article>
+      </div>
+    </div>
+  </section>
+
+  <section class="site-section border-t border-line">
+    <div class="site-container grid gap-10 lg:grid-cols-[0.8fr_1.2fr]">
+      <SectionHeader eyebrow="Background" title="教育经历与奖项" description="保留与学术身份和研究成果直接相关的信息。" />
+      <div class="grid gap-5 md:grid-cols-2">
+        <div class="rounded-lg border border-line p-5">
+          <h2 class="text-xl font-semibold text-ink">Education</h2>
+          <div class="mt-5 space-y-4">
+            {education.map((item) => (
+              <article class="border-b border-line pb-4">
+                <p class="text-sm font-semibold text-accent">{item.period}</p>
+                <div data-lang-panel="research" data-lang="cn" class="mt-2">
+                  <h3 class="font-semibold text-ink">{item.institutionZh}</h3>
+                  <p class="mt-1 text-sm leading-6 text-muted">{item.programZh}</p>
+                </div>
+                <div data-lang-panel="research" data-lang="en" hidden class="mt-2">
+                  <h3 class="font-semibold text-ink">{item.institutionEn}</h3>
+                  <p class="mt-1 text-sm leading-6 text-muted">{item.programEn}</p>
+                </div>
+                <p class="mt-1 text-xs font-semibold uppercase tracking-widest text-muted">{item.location}</p>
+              </article>
+            ))}
+          </div>
+        </div>
+
+        <div class="rounded-lg border border-line p-5">
+          <h2 class="text-xl font-semibold text-ink">Awards</h2>
+          <div class="mt-5 space-y-4">
+            {awards.map((item) => (
+              <article class={`rounded-lg border p-4 ${item.highlight ? 'border-accent bg-soft' : 'border-line'}`}>
+                <div class="flex flex-wrap items-center gap-2">
+                  <p class="text-sm font-semibold text-accent">{item.date}</p>
+                  {item.highlight && <span class="rounded-md bg-white px-2 py-1 text-xs font-semibold text-accent">Best Paper</span>}
+                </div>
+                <h3 class="mt-3 font-semibold text-ink">{item.title}</h3>
+                <p class="mt-1 text-sm font-semibold text-muted">{item.organization}</p>
+                <p class="mt-2 text-sm leading-6 text-muted">{item.description}</p>
+              </article>
+            ))}
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="site-section bg-soft">
+    <div class="site-container">
+      <div class="flex flex-col gap-4 sm:flex-row sm:items-end sm:justify-between">
+        <SectionHeader eyebrow="Projects" title="代表项目" description="重点项目使用详情页解释问题、方法与结果。" />
+        <a class="btn-secondary" href={withBase('/research/projects/')}>全部项目</a>
+      </div>
+      <div class="mt-8 grid gap-5 md:grid-cols-2">
+        {projects.filter((project) => project.featured).map((project) => <ProjectCard project={project} bilingual scope="research" />)}
+      </div>
+    </div>
+  </section>
+
+  <section class="site-section">
+    <div class="site-container grid gap-10 lg:grid-cols-[0.8fr_1.2fr]">
+      <SectionHeader eyebrow="Publications" title="论文 / 会议" description="按年份新到旧排列，作者列表中高亮 Junxiang Yang。" />
+      <PublicationList items={publications.filter((item) => item.selected)} bilingual scope="research" />
+    </div>
+  </section>
+
+  <section class="site-section border-t border-line">
+    <div class="site-container flex flex-col gap-5 sm:flex-row sm:items-center sm:justify-between">
+      <div>
+        <p class="eyebrow">CV</p>
+        <h2 class="mt-3 text-2xl font-semibold text-ink">下载最新 CV</h2>
+      </div>
+      <a class="btn-primary" href={withBase(profile.cvUrl)}>下载 CV</a>
+    </div>
+  </section>
+</BaseLayout>

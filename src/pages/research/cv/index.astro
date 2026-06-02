@@ -1,0 +1,31 @@
+---
+import BaseLayout from '../../../layouts/BaseLayout.astro';
+import LanguageToggle from '../../../components/LanguageToggle.astro';
+import { profile } from '../../../data/profile';
+import { withBase } from '../../../utils/links';
+---
+
+<BaseLayout title="CV" description="个人 CV 下载页。">
+  <section class="site-section">
+    <div class="site-container max-w-3xl">
+      <div class="flex flex-col gap-5 sm:flex-row sm:items-start sm:justify-between">
+        <div>
+          <p class="eyebrow">CV</p>
+          <h1 class="mt-4 text-4xl font-semibold text-ink">Curriculum Vitae</h1>
+        </div>
+        <LanguageToggle scope="research" />
+      </div>
+
+      <div data-lang-panel="research" data-lang="cn" class="mt-8">
+        <p class="text-lg leading-8 text-muted">这里提供 CV 下载入口。当前文件是占位 PDF，请后续将真实 CV 替换为 <code>public/files/cv.pdf</code>。</p>
+      </div>
+      <div data-lang-panel="research" data-lang="en" hidden class="mt-8">
+        <p class="text-lg leading-8 text-muted">This page provides a CV download entry. The current file is a placeholder PDF. Replace it with your real CV at <code>public/files/cv.pdf</code>.</p>
+      </div>
+
+      <div class="mt-8">
+        <a class="btn-primary" href={withBase(profile.cvUrl)}>下载 CV</a>
+      </div>
+    </div>
+  </section>
+</BaseLayout>

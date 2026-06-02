@@ -1,0 +1,74 @@
+---
+interface Props {
+  scope: string;
+  label?: string;
+  class?: string;
+}
+
+const { scope, label = '语言切换' } = Astro.props;
+---
+
+<div class:list={['language-toggle', Astro.props.class]} role="group" aria-label={label}>
+  <button type="button" data-lang-button={scope} data-lang-value="cn" aria-pressed="true">CN</button>
+  <button type="button" data-lang-button={scope} data-lang-value="en" aria-pressed="false">EN</button>
+</div>
+
+<script is:inline>
+  if (!window.__yjxLanguageToggleReady) {
+    window.__yjxLanguageToggleReady = true;
+
+    const storageKey = (scope) => `yjx-language-${scope}`;
+
+    const applyLanguage = (scope, language) => {
+      const normalized = language === 'en' ? 'en' : 'cn';
+
+      document.querySelectorAll(`[data-lang-panel="${scope}"]`).forEach((panel) => {
+        panel.hidden = panel.getAttribute('data-lang') !== normalized;
+      });
+
+      document.querySelectorAll(`[data-lang-button="${scope}"]`).forEach((button) => {
+        const active = button.getAttribute('data-lang-value') === normalized;
+        button.dataset.active = String(active);
+        button.setAttribute('aria-pressed', String(active));
+      });
+
+      try {
+        window.localStorage.setItem(storageKey(scope), normalized);
+      } catch {
+        // localStorage can be unavailable in privacy-restricted contexts.
+      }
+    };
+
+    const initLanguageToggles = () => {
+      const buttons = Array.from(document.querySelectorAll('[data-lang-button]'));
+      const scopes = new Set(buttons.map((button) => button.getAttribute('data-lang-button')).filter(Boolean));
+
+      scopes.forEach((scope) => {
+        let saved = 'cn';
+        try {
+          saved = window.localStorage.getItem(storageKey(scope)) || 'cn';
+        } catch {
+          saved = 'cn';
+        }
+        applyLanguage(scope, saved);
+      });
+
+      buttons.forEach((button) => {
+        if (button.dataset.bound === 'true') return;
+        button.dataset.bound = 'true';
+        button.addEventListener('click', () => {
+          const scope = button.getAttribute('data-lang-button');
+          const language = button.getAttribute('data-lang-value') || 'cn';
+          if (scope) applyLanguage(scope, language);
+        });
+      });
+    };
+
+    if (document.readyState === 'loading') {
+      document.addEventListener('DOMContentLoaded', initLanguageToggles);
+    } else {
+      initLanguageToggles();
+    }
+    document.addEventListener('astro:page-load', initLanguageToggles);
+  }
+</script>

@@ -1,0 +1,33 @@
+---
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import SectionHeader from '../../components/SectionHeader.astro';
+import LifeItemList from '../../components/LifeItemList.astro';
+import { lifeCategories, lifeItems } from '../../data/life';
+import { withBase } from '../../utils/links';
+
+export function getStaticPaths() {
+  return lifeCategories.map((category) => ({
+    params: { slug: category.slug },
+    props: { category, items: lifeItems[category.slug] ?? [] }
+  }));
+}
+
+const { category, items } = Astro.props;
+---
+
+<BaseLayout title={category.title} description={category.summary}>
+  <section class="site-section border-b border-line">
+    <div class="site-container">
+      <a class="text-sm font-semibold text-accent" href={withBase('/life/')}>返回 My Life</a>
+      <div class="mt-5">
+        <SectionHeader eyebrow="My Life" title={category.title} description={category.summary} />
+      </div>
+    </div>
+  </section>
+
+  <section class="site-section">
+    <div class="site-container">
+      <LifeItemList items={items} />
+    </div>
+  </section>
+</BaseLayout>

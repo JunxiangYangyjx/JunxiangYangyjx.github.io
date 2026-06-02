@@ -1,0 +1,122 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+import { profile } from '../data/profile';
+import { lifeCategories } from '../data/life';
+import { withBase } from '../utils/links';
+
+const entryCards = [
+  {
+    title: 'Study & Research',
+    summary: '研究方向、项目经历、论文、奖项与 CV。',
+    href: '/research/'
+  },
+  {
+    title: 'Projects',
+    summary: '代表项目与研究工作。',
+    href: '/research/projects/'
+  },
+  {
+    title: 'Publications',
+    summary: '期刊与会议论文列表。',
+    href: '/research/publications/'
+  },
+  {
+    title: 'My Life',
+    summary: '音乐、照片墙、游戏、软件和动漫等生活内容。',
+    href: '/life/'
+  }
+];
+
+---
+
+<BaseLayout title={`${profile.name} | Home`} description="个人学术、项目与生活展示网站首页。">
+  <section class="home-surface min-h-[calc(100vh-4rem)] border-b border-line py-10 sm:py-14">
+    <div class="site-container">
+      <div class="mx-auto max-w-3xl">
+        <div class="home-search">Junxiang Yang / Study & Research / My Life</div>
+      </div>
+
+      <div class="mt-10 grid gap-6 lg:grid-cols-[0.95fr_1.05fr]">
+        <article class="home-panel">
+          <div class="flex flex-col gap-6 sm:flex-row">
+            <img class="h-28 w-28 shrink-0 rounded-lg border border-[#7dd3fc]/40 object-cover object-top shadow-sm" src={withBase(profile.avatar)} alt={`${profile.name} portrait`} />
+            <div class="min-w-0 grow">
+              <p class="text-sm font-semibold uppercase tracking-widest text-accent">Personal Website</p>
+              <h1 class="mt-4 text-4xl font-semibold text-ink sm:text-5xl">{profile.name}</h1>
+              <p class="mt-4 text-lg font-semibold leading-8 text-ink">个人网站入口</p>
+              <p class="mt-3 leading-8 home-muted">这里作为导航首页，具体研究、项目、论文和 CV 请进入 Study & Research 查看。</p>
+            </div>
+          </div>
+
+          <div class="mt-8 flex flex-wrap gap-3">
+            <a class="btn-primary" href={withBase('/research/')}>Study & Research</a>
+            <a class="btn-secondary" href={withBase('/life/')}>My Life</a>
+            <a class="btn-secondary" href={`mailto:${profile.email}`}>Email</a>
+          </div>
+        </article>
+
+        <aside class="home-panel">
+          <p class="text-xs font-semibold uppercase tracking-widest text-accent">Quick Access</p>
+          <h2 class="mt-2 text-2xl font-semibold text-ink">常用入口</h2>
+          <div class="mt-5 grid gap-3">
+            <a class="home-link-card" href={withBase('/research/projects/')}>
+              <p class="font-semibold text-ink">Projects</p>
+              <p class="mt-2 text-sm home-muted">查看研究项目与工程经历。</p>
+            </a>
+            <a class="home-link-card" href={withBase('/research/publications/')}>
+              <p class="font-semibold text-ink">Publications</p>
+              <p class="mt-2 text-sm home-muted">查看论文、会议论文与 DOI 链接。</p>
+            </a>
+            <a class="home-link-card" href={withBase(profile.cvUrl)}>
+              <p class="font-semibold text-ink">CV</p>
+              <p class="mt-2 text-sm home-muted">下载最新简历。</p>
+            </a>
+          </div>
+        </aside>
+      </div>
+
+      <div class="mt-6 grid gap-6 lg:grid-cols-[1.1fr_0.9fr]">
+        <section class="home-panel">
+          <div class="flex items-center justify-between gap-4">
+            <div>
+              <p class="text-xs font-semibold uppercase tracking-widest text-accent">Pages</p>
+              <h2 class="mt-2 text-2xl font-semibold text-ink">栏目入口</h2>
+            </div>
+            <a class="text-sm font-semibold text-accent" href={withBase('/life/')}>My Life</a>
+          </div>
+          <div class="mt-5 grid gap-3 sm:grid-cols-2">
+            {entryCards.map((item) => (
+              <a class="home-link-card" href={withBase(item.href)}>
+                <p class="font-semibold text-ink">{item.title}</p>
+                <p class="mt-2 text-sm home-muted">{item.summary}</p>
+              </a>
+            ))}
+            {lifeCategories.map((category) => (
+              <a class="home-link-card" href={withBase(`/life/${category.slug}/`)}>
+                <p class="font-semibold text-ink">{category.title}</p>
+                <p class="mt-2 text-sm home-muted">{category.summary}</p>
+              </a>
+            ))}
+          </div>
+        </section>
+
+        <section class="home-panel">
+          <p class="text-xs font-semibold uppercase tracking-widest text-accent">Contact</p>
+          <h2 class="mt-2 text-2xl font-semibold text-ink">联系方式</h2>
+          <div class="mt-5 grid gap-3">
+            <a class="home-link-card" href={`mailto:${profile.email}`}>
+              <p class="font-semibold text-ink">Email</p>
+              <p class="mt-2 text-sm home-muted">{profile.email}</p>
+            </a>
+            {profile.links.map((link) => (
+              <a class="home-link-card" href={link.href}>
+                <p class="font-semibold text-ink">{link.label}</p>
+                <p class="mt-2 text-sm home-muted break-all">{link.href}</p>
+              </a>
+            ))}
+          </div>
+        </section>
+      </div>
+    </div>
+  </section>
+</BaseLayout>

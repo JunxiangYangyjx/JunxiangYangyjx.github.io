@@ -1,0 +1,22 @@
+---
+import BaseLayout from '../../../layouts/BaseLayout.astro';
+import LanguageToggle from '../../../components/LanguageToggle.astro';
+import SectionHeader from '../../../components/SectionHeader.astro';
+import PublicationList from '../../../components/PublicationList.astro';
+import { publications } from '../../../data/research';
+---
+
+<BaseLayout title="Publications" description="论文和会议论文列表。">
+  <section class="site-section border-b border-line">
+    <div class="site-container flex flex-col gap-5 sm:flex-row sm:items-start sm:justify-between">
+      <SectionHeader eyebrow="Study & Research" title="Publications" description="按年份新到旧排列，作者列表中高亮 Junxiang Yang。" />
+      <LanguageToggle scope="research" />
+    </div>
+  </section>
+
+  <section class="site-section">
+    <div class="site-container">
+      <PublicationList items={publications} bilingual scope="research" />
+    </div>
+  </section>
+</BaseLayout>

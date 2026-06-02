@@ -1,0 +1,66 @@
+---
+import { withBase } from '../utils/links';
+
+interface Publication {
+  type: string;
+  typeZh: string;
+  year: string;
+  authors: string;
+  title: string;
+  venue: string;
+  noteZh?: string;
+  noteEn?: string;
+  links: { label: string; href: string }[];
+  selected: boolean;
+}
+
+interface Props {
+  items: Publication[];
+  bilingual?: boolean;
+  scope?: string;
+}
+
+const { items, bilingual = false, scope = 'research' } = Astro.props;
+const sortedItems = [...items].sort((a, b) => Number(b.year) - Number(a.year));
+const splitAuthorName = (authors: string) => authors.split(/(Junxiang Yang)/g);
+---
+
+<div class="space-y-5">
+  {
+    sortedItems.map((item) => (
+      <article class="border-l-2 border-line pl-4">
+        <div class="flex flex-wrap items-center gap-2">
+          <p class="text-sm font-semibold text-accent">{item.year}</p>
+          <span class="rounded-md bg-soft px-2 py-1 text-xs font-semibold text-muted">{item.typeZh}</span>
+          {item.authors.trim().startsWith('Junxiang Yang') && (
+            <span class="rounded-md border border-accent bg-white px-2 py-1 text-xs font-semibold text-accent">First Author / 一作</span>
+          )}
+        </div>
+        <p class="mt-2 font-semibold text-ink">{item.title}</p>
+        <p class="mt-1 text-sm leading-6 text-muted">
+          {splitAuthorName(item.authors).map((part) =>
+            part === 'Junxiang Yang' ? <strong class="font-semibold text-ink">{part}</strong> : <span>{part}</span>
+          )}. <span class="italic">{item.venue}</span>.
+        </p>
+        {item.noteZh && item.noteEn && bilingual && (
+          <>
+            <p data-lang-panel={scope} data-lang="cn" class="mt-2 text-sm leading-6 text-muted">
+              {item.noteZh}
+            </p>
+            <p data-lang-panel={scope} data-lang="en" hidden class="mt-2 text-sm leading-6 text-muted">
+              {item.noteEn}
+            </p>
+          </>
+        )}
+        {item.noteZh && !bilingual && <p class="mt-2 text-sm leading-6 text-muted">{item.noteZh}</p>}
+        {item.links.length > 0 && (
+          <div class="mt-2 flex flex-wrap gap-3 text-sm text-accent">
+            {item.links.map((link) => (
+              <a class="break-all hover:text-accent-strong" href={withBase(link.href)}>{link.href}</a>
+            ))}
+          </div>
+        )}
+      </article>
+    ))
+  }
+</div>

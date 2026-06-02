@@ -1,0 +1,22 @@
+---
+import BaseLayout from '../../../layouts/BaseLayout.astro';
+import LanguageToggle from '../../../components/LanguageToggle.astro';
+import SectionHeader from '../../../components/SectionHeader.astro';
+import ProjectCard from '../../../components/ProjectCard.astro';
+import { projects } from '../../../data/research';
+---
+
+<BaseLayout title="Projects" description="研究项目与工程项目列表。">
+  <section class="site-section border-b border-line">
+    <div class="site-container flex flex-col gap-5 sm:flex-row sm:items-start sm:justify-between">
+      <SectionHeader eyebrow="Study & Research" title="Projects" description="列表展示全部项目，重点项目提供详情页。" />
+      <LanguageToggle scope="research" />
+    </div>
+  </section>
+
+  <section class="site-section">
+    <div class="site-container grid gap-5 md:grid-cols-2">
+      {projects.map((project) => <ProjectCard project={project} bilingual scope="research" />)}
+    </div>
+  </section>
+</BaseLayout>

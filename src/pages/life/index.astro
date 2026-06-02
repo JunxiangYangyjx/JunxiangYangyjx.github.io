@@ -1,0 +1,20 @@
+---
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import SectionHeader from '../../components/SectionHeader.astro';
+import LifeCategoryCard from '../../components/LifeCategoryCard.astro';
+import { lifeCategories } from '../../data/life';
+---
+
+<BaseLayout title="My Life" description="音乐、照片墙、游戏、软件和动漫。">
+  <section class="site-section border-b border-line">
+    <div class="site-container">
+      <SectionHeader eyebrow="My Life" title="生活内容" description="这里保持中文，不参与 CN/EN 切换。内容可以更个人化，但不抢走学术主页的主线。" />
+    </div>
+  </section>
+
+  <section class="site-section">
+    <div class="site-container grid gap-5 md:grid-cols-2 lg:grid-cols-3">
+      {lifeCategories.map((category) => <LifeCategoryCard category={category} />)}
+    </div>
+  </section>
+</BaseLayout>

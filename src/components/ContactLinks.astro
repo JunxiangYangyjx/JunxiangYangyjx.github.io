@@ -1,0 +1,15 @@
+---
+import { profile } from '../data/profile';
+
+const links = [{ label: 'Email', href: `mailto:${profile.email}` }, ...profile.links];
+---
+
+<div class="flex flex-wrap gap-3">
+  {
+    links.map((link) => (
+      <a class="btn-secondary" href={link.href}>
+        {link.label}
+      </a>
+    ))
+  }
+</div>
