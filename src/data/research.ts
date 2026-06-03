@@ -37,6 +37,21 @@ export type ResearchProject = {
   };
 };
 
+export type Publication = {
+  id: string;
+  type: string;
+  typeZh: string;
+  year: string;
+  authors: string;
+  title: string;
+  venue: string;
+  noteZh?: string;
+  noteEn?: string;
+  links: LinkItem[];
+  selected: boolean;
+  relatedProjectSlugs?: string[];
+};
+
 export const researchOverview = {
   titleZh: 'Study & Research',
   titleEn: 'Study & Research',
@@ -250,8 +265,9 @@ export const projects: ResearchProject[] = [
   }
 ];
 
-export const publications = [
+export const publications: Publication[] = [
   {
+    id: 'three-mode-mhz-wpt-unified-coupling',
     type: 'Journal Paper',
     typeZh: '期刊论文',
     year: '2026',
@@ -259,9 +275,11 @@ export const publications = [
     title: 'Three-Mode MHz Wireless Power Transfer: Inductive, Capacitive, and Hybrid, With a Unified Coupling Architecture',
     venue: 'IEEE Journal on Wireless Power Technologies',
     links: [{ label: 'DOI', href: 'https://doi.org/10.1109/JWPT.2026.3680415' }],
-    selected: true
+    selected: true,
+    relatedProjectSlugs: ['self-resonant-hybrid-wpt-frequency-control']
   },
   {
+    id: 'optimized-stacked-passive-coil-array',
     type: 'Journal Paper',
     typeZh: '期刊论文',
     year: '2026',
@@ -269,9 +287,11 @@ export const publications = [
     title: 'Optimized Stacked Passive Coil Array Design for High Efficiency and Misalignment Tolerance in PCB-Based Wireless Power Transfer Systems',
     venue: 'IEEE Transactions on Power Electronics',
     links: [{ label: 'DOI', href: 'https://doi.org/10.1109/TPEL.2026.3680802' }],
-    selected: true
+    selected: true,
+    relatedProjectSlugs: ['pcb-electromagnetic-metasurfaces']
   },
   {
+    id: 'ann-virtual-reference-control-simo',
     type: 'Journal Paper',
     typeZh: '期刊论文',
     year: '2026',
@@ -282,6 +302,7 @@ export const publications = [
     selected: true
   },
   {
+    id: 'two-stage-dc-esr-pcb-couplers-iciea',
     type: 'Conference Paper',
     typeZh: '会议论文',
     year: '2025',
@@ -289,9 +310,11 @@ export const publications = [
     title: 'Two-Stage Optimization of DC Equivalent Series Resistances in Compact PCB-Based Resonant Couplers for Capacitive Power Transfer',
     venue: '2025 IEEE 20th Conference on Industrial Electronics and Applications (ICIEA)',
     links: [{ label: 'DOI', href: 'https://doi.org/10.1109/ICIEA65512.2025.11149148' }],
-    selected: true
+    selected: true,
+    relatedProjectSlugs: ['fem-assisted-resonant-coupler-optimization']
   },
   {
+    id: 'equivalent-circuit-emts-wpt-iciea',
     type: 'Conference Paper',
     typeZh: '会议论文',
     year: '2025',
@@ -299,9 +322,11 @@ export const publications = [
     title: 'Equivalent Circuit Modeling and Analysis of Low-Frequency Electromagnetic Metasurface-Based Wireless Power Transfer Systems',
     venue: '2025 IEEE 20th Conference on Industrial Electronics and Applications (ICIEA)',
     links: [{ label: 'DOI', href: 'https://doi.org/10.1109/ICIEA65512.2025.11149069' }],
-    selected: true
+    selected: true,
+    relatedProjectSlugs: ['pcb-electromagnetic-metasurfaces']
   },
   {
+    id: 'two-stage-quality-factor-sandwich-resonators',
     type: 'Conference Paper',
     typeZh: '会议论文',
     year: '2025',
@@ -309,9 +334,11 @@ export const publications = [
     title: 'A Two-Stage Optimization Strategy for Enhancing the Quality Factors of Sandwich-Structured PCB Based Resonators',
     venue: '2025 IEEE Transportation Electrification Conference and Expo, Asia-Pacific (ITEC Asia-Pacific)',
     links: [{ label: 'DOI', href: 'https://doi.org/10.1109/ITECAsia-Pacific63742.2025.11345033' }],
-    selected: false
+    selected: false,
+    relatedProjectSlugs: ['fem-assisted-resonant-coupler-optimization']
   },
   {
+    id: 'highly-integrated-hybrid-icpt-self-resonator',
     type: 'Journal Paper',
     typeZh: '期刊论文',
     year: '2025',
@@ -319,9 +346,14 @@ export const publications = [
     title: 'Highly Integrated Hybrid Inductive and Capacitive Power Transfer System With Asymmetrical Printed-Circuit-Board-Based Self-Resonator',
     venue: 'IEEE Transactions on Power Electronics, vol. 40, no. 7, pp. 10254-10264',
     links: [{ label: 'DOI', href: 'https://doi.org/10.1109/TPEL.2025.3547902' }],
-    selected: true
+    selected: true,
+    relatedProjectSlugs: [
+      'fem-assisted-resonant-coupler-optimization',
+      'self-resonant-hybrid-wpt-frequency-control'
+    ]
   },
   {
+    id: 'frequency-adjustable-pcb-shielding-coil',
     type: 'Journal Paper',
     typeZh: '期刊论文',
     year: '2024',
@@ -329,9 +361,11 @@ export const publications = [
     title: 'A Frequency-Adjustable PCB Shielding Coil in Wireless Power Transfer System',
     venue: 'Wireless Power Transfer, 11, e006',
     links: [{ label: 'DOI', href: 'https://doi.org/10.48130/wpt-0024-0008' }],
-    selected: true
+    selected: true,
+    relatedProjectSlugs: ['pcb-electromagnetic-metasurfaces']
   },
   {
+    id: 'domino-ipt-quasi-load-independent-current',
     type: 'Conference Paper',
     typeZh: '会议论文',
     year: '2024',
@@ -342,6 +376,7 @@ export const publications = [
     selected: false
   },
   {
+    id: 'secure-fast-charging-electrothermal-model',
     type: 'Conference Paper',
     typeZh: '会议论文',
     year: '2024',
@@ -352,6 +387,7 @@ export const publications = [
     selected: false
   },
   {
+    id: 'simplified-pcb-wpt-resonator-1356mhz',
     type: 'Conference Paper',
     typeZh: '会议论文',
     year: '2024',
