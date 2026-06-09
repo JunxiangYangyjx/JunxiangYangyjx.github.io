@@ -8,6 +8,58 @@ interface Props {
 
 const { item } = Astro.props;
 const tracks = item.tracks ?? [];
+
+type Track = NonNullable<LifeItem['tracks']>[number];
+
+const tagOrder = ['日语', '孤独摇滚', 'K-ON', '动漫', 'Eason', '粤语', '华语', '林宥嘉', '陶喆', '米津玄師', 'Aimer', '英文'];
+
+function getTrackTags(track: Track) {
+  const text = `${track.title} ${track.artist}`.toLowerCase();
+  const tags = new Set<string>();
+  const hasJapanese = /[\u3040-\u30ff]/.test(`${track.title} ${track.artist}`);
+  const hasChinese = /[\u3400-\u9fff]/.test(`${track.title} ${track.artist}`);
+
+  if (hasJapanese || ['kessoku band', 'yorushika', 'kenshi yonezu', 'aimer', 'eve', 'reol', 'yoasobi'].some((name) => text.includes(name))) tags.add('日语');
+  if (text.includes('kessoku band')) {
+    tags.add('孤独摇滚');
+    tags.add('动漫');
+  }
+  if (text.includes('k-on') || text.includes('sakurakou k-on bu')) {
+    tags.add('K-ON');
+    tags.add('动漫');
+    tags.add('日语');
+  }
+  if (['aimer', 'eve', 'egoist', 'sayuri', 'queen bee', 'yoasobi', 'rokudenashi', 'maisondes', 'masayoshi oishi', 'kenshi yonezu'].some((name) => text.includes(name))) tags.add('动漫');
+  if (text.includes('eason chan')) {
+    tags.add('Eason');
+    tags.add('粤语');
+    tags.add('华语');
+  }
+  if (text.includes('yoga lin')) {
+    tags.add('林宥嘉');
+    tags.add('华语');
+  }
+  if (text.includes('david tao')) {
+    tags.add('陶喆');
+    tags.add('华语');
+  }
+  if (text.includes('kenshi yonezu')) tags.add('米津玄師');
+  if (text.includes('aimer')) tags.add('Aimer');
+  if (hasChinese || ['jolin', 'miriam yeung', 'joker xue', 'a si', '告五人'].some((name) => text.includes(name))) tags.add('华语');
+  if (['taylor swift', 'usher', 'pitbull', 'craig david', 'linkin park', 't.a.t.u.', 'mc mong', 'jamie', 'imagine dragons', 'jid', 'bea miller'].some((name) => text.includes(name))) tags.add('英文');
+
+  return tagOrder.filter((tag) => tags.has(tag));
+}
+
+const tracksWithTags = tracks.map((track) => ({
+  ...track,
+  tags: getTrackTags(track)
+}));
+
+const tagCounts = tagOrder.map((tag) => ({
+  label: tag,
+  count: tracksWithTags.filter((track) => track.tags.includes(tag)).length
+})).filter((tag) => tag.count > 0);
 ---
 
 <section class="min-h-[calc(100vh-4rem)] border-b border-line bg-gradient-to-b from-white via-[#f7fbfd] to-white">
@@ -70,11 +122,36 @@ const tracks = item.tracks ?? [];
       <div>
         <p class="eyebrow">Songs</p>
         <h2 class="mt-3 text-3xl font-semibold text-ink">歌单里的歌</h2>
-        <p class="mt-3 max-w-2xl leading-7 text-muted">从 Spotify 嵌入页解析出的曲目列表，按歌单顺序展示。列表内部可以独立滚动。</p>
+        <p class="mt-3 max-w-2xl leading-7 text-muted">从 Spotify 嵌入页解析出的曲目列表，按歌单顺序展示。点击标签可以快速筛选想听的歌。</p>
       </div>
       {item.spotifyUrl && (
         <a class="btn-secondary" href={item.spotifyUrl} target="_blank" rel="noreferrer">查看完整歌单</a>
       )}
+    </div>
+
+    <div class="mt-6 rounded-2xl border border-line bg-white p-4 shadow-sm" data-music-filter>
+      <div class="flex flex-col gap-3 sm:flex-row sm:items-center sm:justify-between">
+        <div>
+          <p class="text-xs font-semibold uppercase tracking-widest text-muted">Filter tags</p>
+          <p class="mt-1 text-sm text-muted"><span data-song-count>{tracksWithTags.length}</span> / {tracksWithTags.length} songs</p>
+        </div>
+        <button class="rounded-md border border-line px-3 py-2 text-sm font-semibold text-accent transition hover:border-accent" type="button" data-clear-tags>
+          全部
+        </button>
+      </div>
+      <div class="mt-4 flex flex-wrap gap-2">
+        {tagCounts.map((tag) => (
+          <button
+            class="rounded-md border border-line bg-soft px-3 py-1.5 text-sm font-semibold text-muted transition hover:border-accent hover:text-accent aria-pressed:border-accent aria-pressed:bg-accent aria-pressed:text-white"
+            type="button"
+            aria-pressed="false"
+            data-music-tag={tag.label}
+          >
+            {tag.label}
+            <span class="ml-1 text-xs opacity-75">{tag.count}</span>
+          </button>
+        ))}
+      </div>
     </div>
 
     <div class="mt-8 overflow-hidden rounded-2xl border border-line bg-white shadow-sm">
@@ -84,12 +161,19 @@ const tracks = item.tracks ?? [];
         <span class="text-right">Time</span>
       </div>
       <div class="max-h-[70vh] overflow-y-auto overscroll-contain">
-        {tracks.map((track, index) => (
-          <article class="grid grid-cols-[3.5rem_minmax(0,1fr)_4.5rem] gap-4 border-b border-line/70 px-4 py-3 transition last:border-b-0 hover:bg-soft sm:grid-cols-[4.5rem_minmax(0,1fr)_5.5rem] sm:px-5">
+        {tracksWithTags.map((track, index) => (
+          <article class="grid grid-cols-[3.5rem_minmax(0,1fr)_4.5rem] gap-4 border-b border-line/70 px-4 py-3 transition last:border-b-0 hover:bg-soft sm:grid-cols-[4.5rem_minmax(0,1fr)_5.5rem] sm:px-5" data-track-row data-track-tags={track.tags.join('|')}>
             <span class="pt-1 text-sm font-semibold text-muted">{String(index + 1).padStart(2, '0')}</span>
             <div class="min-w-0">
               <h3 class="truncate text-base font-semibold text-ink sm:text-lg">{track.title}</h3>
               <p class="mt-1 truncate text-sm text-muted">{track.artist}</p>
+              {track.tags.length > 0 && (
+                <div class="mt-2 flex flex-wrap gap-1.5">
+                  {track.tags.slice(0, 4).map((tag) => (
+                    <span class="rounded bg-soft px-2 py-0.5 text-[11px] font-semibold text-muted">{tag}</span>
+                  ))}
+                </div>
+              )}
             </div>
             <span class="pt-1 text-right text-sm font-semibold text-muted">{track.duration}</span>
           </article>
@@ -98,3 +182,46 @@ const tracks = item.tracks ?? [];
     </div>
   </div>
 </section>
+
+<script>
+  const filterRoot = document.querySelector('[data-music-filter]');
+  const tagButtons = Array.from(document.querySelectorAll<HTMLButtonElement>('[data-music-tag]'));
+  const clearButton = document.querySelector<HTMLButtonElement>('[data-clear-tags]');
+  const rows = Array.from(document.querySelectorAll<HTMLElement>('[data-track-row]'));
+  const countEl = document.querySelector<HTMLElement>('[data-song-count]');
+  const activeTags = new Set<string>();
+
+  function updateSongFilter() {
+    let visibleCount = 0;
+    rows.forEach((row) => {
+      const rowTags = (row.dataset.trackTags ?? '').split('|').filter(Boolean);
+      const isVisible = activeTags.size === 0 || rowTags.some((tag) => activeTags.has(tag));
+      row.hidden = !isVisible;
+      if (isVisible) visibleCount += 1;
+    });
+    tagButtons.forEach((button) => {
+      const tag = button.dataset.musicTag ?? '';
+      button.setAttribute('aria-pressed', String(activeTags.has(tag)));
+    });
+    if (countEl) countEl.textContent = String(visibleCount);
+  }
+
+  tagButtons.forEach((button) => {
+    button.addEventListener('click', () => {
+      const tag = button.dataset.musicTag;
+      if (!tag) return;
+      if (activeTags.has(tag)) {
+        activeTags.delete(tag);
+      } else {
+        activeTags.add(tag);
+      }
+      updateSongFilter();
+      filterRoot?.scrollIntoView({ block: 'nearest' });
+    });
+  });
+
+  clearButton?.addEventListener('click', () => {
+    activeTags.clear();
+    updateSongFilter();
+  });
+</script>
