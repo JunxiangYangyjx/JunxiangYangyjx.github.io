@@ -5,8 +5,17 @@ export type LifeItem = {
   tags: string[];
   image?: string;
   imageAlt?: string;
+  coverImage?: string;
+  coverAlt?: string;
   spotifyEmbedUrl?: string;
   spotifyUrl?: string;
+  tracks?: {
+    title: string;
+    artist: string;
+    duration?: string;
+    note?: string;
+    tags?: string[];
+  }[];
   externalLink?: string;
 };
 
@@ -54,10 +63,35 @@ export const lifeItems: Record<string, LifeItem[]> = {
     {
       title: 'YJX',
       category: '音乐',
-      summary: '我的 Spotify 歌单入口。这里直接嵌入播放器，歌单内容会跟随 Spotify 上的更新同步显示。',
+      summary: '我的 Spotify 歌单入口。首屏保留自定义展示，真实播放交给 Spotify；下面会逐步整理常听歌曲和简短备注。',
       tags: ['Spotify', 'Playlist', 'Daily'],
+      coverImage: 'https://mosaic.scdn.co/300/ab67616d00001e02384850c46c22b0685d6def6fab67616d00001e02a8fba2c2b6f814544da279d1ab67616d00001e02e192db03c0db78e0eead6114ab67616d00001e02fb3a0ed02a87b110cdb6d391',
+      coverAlt: 'Spotify playlist cover for YJX',
       spotifyEmbedUrl: 'https://open.spotify.com/embed/playlist/34u7oFUYhJQX4kX4YziEz6?utm_source=oembed',
-      spotifyUrl: 'https://open.spotify.com/playlist/34u7oFUYhJQX4kX4YziEz6?si=358a09d682964cad'
+      spotifyUrl: 'https://open.spotify.com/playlist/34u7oFUYhJQX4kX4YziEz6?si=358a09d682964cad',
+      tracks: [
+        {
+          title: 'Unrequited',
+          artist: '林宥嘉',
+          duration: '05:07',
+          note: '从当前 Spotify 播放器可见列表中整理，后续可以继续补完整曲目。',
+          tags: ['Playlist']
+        },
+        {
+          title: 'KICK BACK',
+          artist: '米津玄師',
+          duration: '03:13',
+          note: '适合放在歌单里作为更有能量的一首。',
+          tags: ['J-Pop', 'Anime']
+        },
+        {
+          title: 'Kaikai Kitan',
+          artist: 'Eve',
+          duration: '03:41',
+          note: '同样来自当前播放器中可见曲目，先作为 Music 页的歌曲卡片示例。',
+          tags: ['Anime', 'J-Pop']
+        }
+      ]
     }
   ],
   gallery: [
