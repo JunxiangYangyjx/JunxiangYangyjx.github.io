@@ -49,8 +49,8 @@ export const lifeCategories = [
   {
     slug: 'software',
     title: '软件',
-    summary: '展示偏个人创作或兴趣驱动的软件、小工具和设计。',
-    accent: '创作'
+    summary: '整理个人做过的软件、小工具、Codex skill、研究代码和开源项目。',
+    accent: '代码'
   },
   {
     slug: 'anime',
@@ -151,35 +151,35 @@ export const lifeItems: Record<string, LifeItem[]> = {
   software: [
     {
       title: 'DeskTask',
-      category: '软件',
+      category: '桌面软件',
       summary: '一个 Windows 桌面任务面板，基于 PySide6 / Qt 构建，支持紧凑悬浮窗口、任务快速编辑和本地提醒。',
       tags: ['Python', 'PySide6', 'Qt', 'Windows', 'Desktop App'],
       externalLink: 'https://github.com/JunxiangYangyjx/DeskTask'
     },
     {
       title: 'Paper Review Comments Skill',
-      category: '软件',
+      category: 'Codex Skill',
       summary: '一个用于辅助论文审稿的 Codex skill，可生成结构化 review data、HTML evidence 页面和英文 copy-ready comments。',
       tags: ['Python', 'HTML', 'Codex Skill', 'Paper Review'],
       externalLink: 'https://github.com/JunxiangYangyjx/codex-paper-review-comments-skill'
     },
     {
       title: 'FEM Simulation of HPT Coupler',
-      category: '软件',
+      category: '研究代码',
       summary: '面向 HPT coupler 的 FEM 仿真优化代码，README 中说明了单次仿真测试、Latin hypercube sampling 和 dictionary-based search 三个部分。',
       tags: ['Python', 'MATLAB', 'Ansys', 'FEM', 'Optimization'],
       externalLink: 'https://github.com/JunxiangYangyjx/FEM-Simulation-of-HPT-Coupler-'
     },
     {
       title: 'SPCA Optimization',
-      category: '软件',
+      category: '研究代码',
       summary: '用于 SPCA 优化的 FEM simulation based optimization framework，结合 Ansys Maxwell 自动化、pymoo / NSGA-II 和 pyaedt。',
       tags: ['Python', 'pyaedt', 'pymoo', 'NSGA-II', 'Research Software'],
       externalLink: 'https://github.com/JunxiangYangyjx/SPCA-optimization'
     },
     {
       title: 'Personal Website',
-      category: '软件',
+      category: '网站项目',
       summary: '这个个人学术、项目与生活展示网站本身，使用 Astro + Tailwind CSS + data files 构建，并通过 GitHub Pages 部署。',
       tags: ['Astro', 'TypeScript', 'Tailwind CSS', 'GitHub Pages'],
       externalLink: 'https://github.com/JunxiangYangyjx/JunxiangYangyjx.github.io'
