@@ -31,7 +31,7 @@ const { items } = Astro.props;
         </div>
         {item.externalLink && (
           <a class="mt-4 inline-flex text-sm font-semibold text-accent" href={item.externalLink} target="_blank" rel="noreferrer">
-            外部链接
+            {item.externalLink.includes('github.com') ? 'GitHub 仓库' : '外部链接'}
           </a>
         )}
       </article>
