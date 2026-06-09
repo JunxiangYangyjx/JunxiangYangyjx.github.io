@@ -17,7 +17,6 @@ function getTrackTags(track: Track) {
   const text = `${track.title} ${track.artist}`.toLowerCase();
   const tags = new Set<string>();
   const hasJapanese = /[\u3040-\u30ff]/.test(`${track.title} ${track.artist}`);
-  const hasChinese = /[\u3400-\u9fff]/.test(`${track.title} ${track.artist}`);
 
   if (hasJapanese || ['kessoku band', 'yorushika', 'kenshi yonezu', 'aimer', 'eve', 'reol', 'yoasobi'].some((name) => text.includes(name))) tags.add('日语');
   if (text.includes('kessoku band')) {
@@ -45,7 +44,8 @@ function getTrackTags(track: Track) {
   }
   if (text.includes('kenshi yonezu')) tags.add('米津玄師');
   if (text.includes('aimer')) tags.add('Aimer');
-  if (hasChinese || ['jolin', 'miriam yeung', 'joker xue', 'a si', '告五人'].some((name) => text.includes(name))) tags.add('华语');
+  if (['jolin', 'miriam yeung', 'joker xue', 'a si', '告五人'].some((name) => text.includes(name))) tags.add('华语');
+  if (text.includes('miriam yeung')) tags.add('粤语');
   if (['taylor swift', 'usher', 'pitbull', 'craig david', 'linkin park', 't.a.t.u.', 'mc mong', 'jamie', 'imagine dragons', 'jid', 'bea miller'].some((name) => text.includes(name))) tags.add('英文');
 
   return tagOrder.filter((tag) => tags.has(tag));
