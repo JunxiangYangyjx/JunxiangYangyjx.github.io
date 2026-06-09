@@ -3,6 +3,8 @@ export type LifeItem = {
   category: string;
   summary: string;
   tags: string[];
+  image?: string;
+  imageAlt?: string;
   externalLink?: string;
 };
 
@@ -18,6 +20,12 @@ export const lifeCategories = [
     title: '照片墙',
     summary: '保存旅行、校园、城市和日常片段。',
     accent: '影像'
+  },
+  {
+    slug: 'with-her',
+    title: 'With her',
+    summary: '单独保存一些两个人一起走过的片段。',
+    accent: '陪伴'
   },
   {
     slug: 'games',
@@ -56,16 +64,62 @@ export const lifeItems: Record<string, LifeItem[]> = {
   ],
   gallery: [
     {
-      title: '校园与城市',
+      title: 'NTU 路上的朋友们',
       category: '照片墙',
-      summary: '首版先用文字占位；后续把照片放入 public/images/gallery 并替换这里的字段。',
-      tags: ['Photo', 'City']
+      summary: '出行路上的合照，适合放在照片墙里作为生活片段。',
+      tags: ['Friends', 'NTU', 'Daily'],
+      image: '/images/life/gallery/ntu-friends.jpg',
+      imageAlt: '朋友们在车上的合照'
     },
     {
-      title: '旅行片段',
+      title: 'PolyU 片段',
       category: '照片墙',
-      summary: '照片墙建议按年份或主题维护，避免一次性堆太多图片。',
-      tags: ['Travel', 'Memory']
+      summary: '在香港留下的一张轻松合照，记录一次校园与城市之间的停留。',
+      tags: ['Hong Kong', 'PolyU', 'Memory'],
+      image: '/images/life/gallery/polyu-dessert.jpg',
+      imageAlt: '在餐厅里的合照'
+    },
+    {
+      title: '晚餐合照',
+      category: '照片墙',
+      summary: '和朋友一起吃饭时随手拍下的日常。',
+      tags: ['Dinner', 'Friends', 'Daily'],
+      image: '/images/life/gallery/dinner-with-friend.jpg',
+      imageAlt: '和朋友晚餐时的合照'
+    }
+  ],
+  'with-her': [
+    {
+      title: '靠在一起的瞬间',
+      category: 'With her',
+      summary: '一起拍照时留下的安静片段。',
+      tags: ['Memory', 'Together'],
+      image: '/images/life/with-her/with-her-wall-heart.jpg',
+      imageAlt: '两个人靠在一起的合照'
+    },
+    {
+      title: '海边自拍',
+      category: 'With her',
+      summary: '有海风和傍晚光线的一张合照。',
+      tags: ['Seaside', 'Travel'],
+      image: '/images/life/with-her/with-her-seaside.jpg',
+      imageAlt: '两个人在海边的自拍'
+    },
+    {
+      title: '比心',
+      category: 'With her',
+      summary: '很直接也很可爱的留念。',
+      tags: ['Together', 'Photo'],
+      image: '/images/life/with-her/with-her-heart-pose.jpg',
+      imageAlt: '两个人一起比心的合照'
+    },
+    {
+      title: '城市草坪',
+      category: 'With her',
+      summary: '城市天际线前的一张日常合照。',
+      tags: ['City', 'Singapore', 'Memory'],
+      image: '/images/life/with-her/with-her-city-lawn.jpg',
+      imageAlt: '两个人在城市草坪前的合照'
     }
   ],
   games: [
