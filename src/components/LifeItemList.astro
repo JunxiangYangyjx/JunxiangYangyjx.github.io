@@ -9,13 +9,13 @@ interface Props {
 const { items } = Astro.props;
 ---
 
-<div class="grid gap-4 md:grid-cols-2">
+<div class="columns-1 gap-4 md:columns-2 xl:columns-3">
   {
     items.map((item) => (
-      <article class="card">
+      <article class="card mb-4 break-inside-avoid">
         {item.image && (
           <img
-            class="aspect-[4/3] w-full rounded-md border border-line bg-soft object-cover"
+            class="h-auto w-full rounded-md border border-line bg-soft"
             src={withBase(item.image)}
             alt={item.imageAlt ?? item.title}
             loading="lazy"
