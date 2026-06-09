@@ -1,3 +1,5 @@
+import { spotifyPlaylistTracks } from './spotifyTracks';
+
 export type LifeItem = {
   title: string;
   category: string;
@@ -9,7 +11,7 @@ export type LifeItem = {
   coverAlt?: string;
   spotifyEmbedUrl?: string;
   spotifyUrl?: string;
-  tracks?: {
+  tracks?: readonly {
     title: string;
     artist: string;
     duration?: string;
@@ -69,29 +71,7 @@ export const lifeItems: Record<string, LifeItem[]> = {
       coverAlt: 'Spotify playlist cover for YJX',
       spotifyEmbedUrl: 'https://open.spotify.com/embed/playlist/34u7oFUYhJQX4kX4YziEz6?utm_source=oembed',
       spotifyUrl: 'https://open.spotify.com/playlist/34u7oFUYhJQX4kX4YziEz6?si=358a09d682964cad',
-      tracks: [
-        {
-          title: 'Unrequited',
-          artist: '林宥嘉',
-          duration: '05:07',
-          note: '从当前 Spotify 播放器可见列表中整理，后续可以继续补完整曲目。',
-          tags: ['Playlist']
-        },
-        {
-          title: 'KICK BACK',
-          artist: '米津玄師',
-          duration: '03:13',
-          note: '适合放在歌单里作为更有能量的一首。',
-          tags: ['J-Pop', 'Anime']
-        },
-        {
-          title: 'Kaikai Kitan',
-          artist: 'Eve',
-          duration: '03:41',
-          note: '同样来自当前播放器中可见曲目，先作为 Music 页的歌曲卡片示例。',
-          tags: ['Anime', 'J-Pop']
-        }
-      ]
+      tracks: spotifyPlaylistTracks
     }
   ],
   gallery: [
