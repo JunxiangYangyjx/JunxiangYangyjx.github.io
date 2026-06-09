@@ -29,8 +29,26 @@ const { items } = Astro.props;
             <span class="rounded-md bg-soft px-2.5 py-1 text-xs font-medium text-muted">{tag}</span>
           ))}
         </div>
+        {item.spotifyEmbedUrl && (
+          <div class="mt-5 overflow-hidden rounded-lg border border-line bg-soft">
+            <iframe
+              class="block w-full"
+              src={item.spotifyEmbedUrl}
+              title={`Spotify playlist: ${item.title}`}
+              width="100%"
+              height="352"
+              allow="autoplay; clipboard-write; encrypted-media; fullscreen; picture-in-picture"
+              loading="lazy"
+            />
+          </div>
+        )}
+        {item.spotifyUrl && (
+          <a class="mt-4 inline-flex text-sm font-semibold text-accent" href={item.spotifyUrl} target="_blank" rel="noreferrer">
+            在 Spotify 打开
+          </a>
+        )}
         {item.externalLink && (
-          <a class="mt-4 inline-flex text-sm font-semibold text-accent" href={item.externalLink}>
+          <a class="mt-4 inline-flex text-sm font-semibold text-accent" href={item.externalLink} target="_blank" rel="noreferrer">
             外部链接
           </a>
         )}

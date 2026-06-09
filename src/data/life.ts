@@ -5,6 +5,8 @@ export type LifeItem = {
   tags: string[];
   image?: string;
   imageAlt?: string;
+  spotifyEmbedUrl?: string;
+  spotifyUrl?: string;
   externalLink?: string;
 };
 
@@ -50,16 +52,12 @@ export const lifeCategories = [
 export const lifeItems: Record<string, LifeItem[]> = {
   music: [
     {
-      title: '最近循环歌单',
+      title: 'YJX',
       category: '音乐',
-      summary: '这里可以放 Spotify、网易云或本地歌单链接，也可以只写简短推荐。',
-      tags: ['Playlist', 'Daily']
-    },
-    {
-      title: '值得记录的一张专辑',
-      category: '音乐',
-      summary: '用 2-3 句话说明为什么喜欢，而不是做完整乐评。',
-      tags: ['Album', 'Note']
+      summary: '我的 Spotify 歌单入口。这里直接嵌入播放器，歌单内容会跟随 Spotify 上的更新同步显示。',
+      tags: ['Spotify', 'Playlist', 'Daily'],
+      spotifyEmbedUrl: 'https://open.spotify.com/embed/playlist/34u7oFUYhJQX4kX4YziEz6?utm_source=oembed',
+      spotifyUrl: 'https://open.spotify.com/playlist/34u7oFUYhJQX4kX4YziEz6?si=358a09d682964cad'
     }
   ],
   gallery: [
