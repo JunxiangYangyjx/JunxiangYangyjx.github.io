@@ -267,6 +267,32 @@ export const projects: ResearchProject[] = [
 
 export const publications: Publication[] = [
   {
+    id: 'free-form-passive-metasurfaces-selective-field-shaping',
+    type: 'Accepted Conference Paper',
+    typeZh: '已录用会议论文',
+    year: '2027',
+    authors: 'Junxiang Yang; Xian He; Yun Yang',
+    title: 'Free-Form Passive Metasurfaces for Selective Magnetic-Field Shaping in Wireless Power Transfer',
+    venue: '2027 IEEE Applied Power Electronics Conference and Exposition (APEC)',
+    noteZh: '已录用；正式出版信息和 DOI 将在会议论文集发布后补充。',
+    noteEn: 'Accepted; final publication details and DOI will be added after the conference proceedings are released.',
+    links: [],
+    selected: true,
+    relatedProjectSlugs: ['pcb-electromagnetic-metasurfaces']
+  },
+  {
+    id: 'elite-circuit-model-enhanced-frequency-control',
+    type: 'Journal Paper',
+    typeZh: '期刊论文',
+    year: '2026',
+    authors: 'Junxiang Yang; Zhen Sun; Kaiyuan Wang; Yun Yang',
+    title: 'An Elite Circuit Model-Enhanced Frequency Control for Self-Resonant PCB-Based Hybrid Wireless Power Transfer Systems',
+    venue: 'IEEE Transactions on Industrial Electronics',
+    links: [{ label: 'DOI', href: 'https://doi.org/10.1109/TIE.2026.3722982' }],
+    selected: true,
+    relatedProjectSlugs: ['self-resonant-hybrid-wpt-frequency-control']
+  },
+  {
     id: 'three-mode-mhz-wpt-unified-coupling',
     type: 'Journal Paper',
     typeZh: '期刊论文',
